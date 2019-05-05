@@ -4,4 +4,4 @@
 
 ## Installation
 
-Download latest [release](https://github.com/khairul169/gdsqlite-native/releases) of this module and uncompress it on your project directory.
+Follow instructions on how to compile [GDNative C++](https://docs.godotengine.org/en/3.0/tutorials/plugins/gdnative/gdnative-cpp-example.html?highlight=nativescript) to compile this module

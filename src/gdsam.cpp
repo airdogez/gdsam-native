@@ -6,10 +6,16 @@
 
 using namespace godot;
 
-void SAM::set_input(String text){
+void SAM::set_input(String text, bool phonetic){
+	memset(input, 0, 256);
 	strcat_s((char*)input, 256, text.ascii().get_data());
 	strcat_s((char*)input, 256, " ");
-    //input = (unsigned char*)(text.ascii().get_data());
+	if(!phonetic){
+		strcat_s((char*)input, 256, "[");
+		if (!textToPhonemes(state, input)){
+			Godot::print("Couldn't transform texto to phonemes");
+		}
+	}
 }
 
 void SAM::set_pitch(int pitch){
@@ -28,18 +34,39 @@ void SAM::set_throat(int throat){
     state.throat= (unsigned char) throat;
 }
 
-int SAM::get_pitch(){
-	return state.pitch;
+void SAM::set_singmode(bool sing){
+	state.singmode = sing;
 }
 
-int SAM::generate_tts(){
-	state.debug = 1;
+
+void SAM::generate(String text, int pitch, int speed, int mouth, int throat){
+    //state = SamState();
+	memset(state.buffer, 0, sizeof(state.buffer));
+	state.bufferpos = 0;
+	state.pitch = pitch;
+	state.speed = speed;
+	state.mouth = mouth;
+	state.throat = throat;
+    memset(input, 0, 256);
+	strcat_s((char*)input, 256, text.ascii().get_data());
+	strcat_s((char*)input, 256, " ");
 	strcat_s((char*)input, 256, "[");
-	if (!textToPhonemes(state, input)) return 2;
+	if (!textToPhonemes(state, input)){
+		Godot::print("Couldn't transform texto to phonemes");
+	}
     if (!SAMMain(input, state)){
-		return 1;
+		Godot::print("Couldn't generate tts");
     }
-    write_wav("test.wav", state.buffer, state.bufferpos/50);
+}
+
+
+int SAM::generate_tts(int debug){
+	state.debug = debug;
+	memset(state.buffer, 0, sizeof(state.buffer));
+	state.bufferpos = 0;
+    if (!SAMMain(input, state)){
+		return -1;
+    }
 	return 0;
 }
 
@@ -81,8 +108,9 @@ void SAM::write_wav(char* filename, char* buffer, int bufferlength)
 }
 
 Vector2 SAM::get_buffer_at_pos(int idx){
-    return Vector2(state.buffer[idx]/255.0, state.buffer[idx]/255.0);
+    return Vector2(state.buffer[idx], state.buffer[idx]);
 }
+
 int SAM::get_buffer_size(){
     return state.bufferpos/50;
 }
@@ -95,23 +123,23 @@ Array SAM::get_buffer(){
 	return ar;
 }
 
-String SAM::get_output(){
-
-    return String(state.buffer);
-}
-
 SAM::SAM() {
     state = SamState();
-    memset(input, 0, 256);
+    //memset(input, 0, 256);
 }
 
 void SAM::_register_methods() {
-	register_method("generate_tts", &SAM::generate_tts);
-	register_method("get_output", &SAM::get_output);
-	register_method("get_pitch", &SAM::get_pitch);
 	register_method("set_pitch", &SAM::set_pitch);
+	register_method("set_mouth", &SAM::set_mouth);
+	register_method("set_speed", &SAM::set_speed);
+	register_method("set_throat", &SAM::set_throat);
+	register_method("set_singmode", &SAM::set_singmode);
 	register_method("set_input", &SAM::set_input);
+
 	register_method("get_buffer_at_pos", &SAM::get_buffer_at_pos);
 	register_method("get_buffer_size", &SAM::get_buffer_size);
 	register_method("get_buffer", &SAM::get_buffer);
+
+	register_method("generate", &SAM::generate);
+	register_method("generate_tts", &SAM::generate_tts);
 }

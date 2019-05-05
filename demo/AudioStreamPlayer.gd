@@ -6,10 +6,10 @@ var sam
 
 func _fill_buffer():
 	var to_fill = playback.get_frames_available()
-	var size = sam.get_buffer_size()
+	var buf = sam.get_buffer()
 	
-	for i in range(size):
-		playback.push_frame(sam.get_buffer_at_pos(i))
+	for i in buf:
+		playback.push_frame(Vector2(i,i)/255.0)
 
 func _ready():
 	sam = SAM.new()

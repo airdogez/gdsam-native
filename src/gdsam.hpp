@@ -28,6 +28,7 @@ namespace godot {
 	  void write_wav(char *filename, char *buffer, int bufferlength);
 	  Vector2 get_buffer_at_pos(int idx);
 	  int get_buffer_size();
+	  Array get_buffer();
 
 	  String get_output();
 

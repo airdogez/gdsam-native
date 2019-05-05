@@ -87,6 +87,14 @@ int SAM::get_buffer_size(){
     return state.bufferpos/50;
 }
 
+Array SAM::get_buffer(){
+	Array ar = Array();
+	for(int i = 0; i<state.bufferpos/50; i++){
+		ar.append(state.buffer[i]);
+	}
+	return ar;
+}
+
 String SAM::get_output(){
 
     return String(state.buffer);
@@ -105,4 +113,5 @@ void SAM::_register_methods() {
 	register_method("set_input", &SAM::set_input);
 	register_method("get_buffer_at_pos", &SAM::get_buffer_at_pos);
 	register_method("get_buffer_size", &SAM::get_buffer_size);
+	register_method("get_buffer", &SAM::get_buffer);
 }

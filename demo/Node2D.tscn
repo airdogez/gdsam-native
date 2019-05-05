@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://AudioStreamPlayer.gd" type="Script" id=1]
+
+[sub_resource type="AudioStreamGenerator" id=1]
+mix_rate = 22050.0
+buffer_length = 10.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 1 )
+script = ExtResource( 1 )

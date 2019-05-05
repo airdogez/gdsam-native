@@ -9,7 +9,7 @@ platform = ARGUMENTS.get('p', ARGUMENTS.get('platform', 'windows'));
 bits = ARGUMENTS.get('b', ARGUMENTS.get('bits', '64'));
 target = ARGUMENTS.get('t', ARGUMENTS.get('target', 'release'));
 output = 'gdsam';
-godotcpp_lib = 'godot_cpp';
+godotcpp_lib = 'godot-cpp';
 
 if platform == 'linux':
 	if ARGUMENTS.get('use_llvm', 'no') == 'yes':
@@ -66,16 +66,16 @@ else:
 env.Append(CPPPATH=[
 	'src',
 	'thirdparty/SAM',
-	'thirdparty/godot_cpp/godot_headers/',
-	'thirdparty/godot_cpp/include',
-	'thirdparty/godot_cpp/include/core',
-	'thirdparty/godot_cpp/include/gen'
+	'thirdparty/godot-cpp/godot_headers/',
+	'thirdparty/godot-cpp/include',
+	'thirdparty/godot-cpp/include/core',
+	'thirdparty/godot-cpp/include/gen'
 ]);
 
 # Source lists
 sources = [
 	'src/gdsam.cpp',
-	'src/library.cpp',
+	'src/gdlibrary.cpp',
 	'thirdparty/SAM/sam.cc',
     'thirdparty/SAM/createtransitions.cc',
     'thirdparty/SAM/debug.cc',
@@ -87,7 +87,7 @@ sources = [
 ];
 
 # Libraries
-env.Append(LIBPATH=['thirdparty/godot_cpp/bin/']);
+env.Append(LIBPATH=['thirdparty/godot-cpp/bin/']);
 env.Append(LIBS=[godotcpp_lib]);
 
 library = env.SharedLibrary(target=('bin/' + output), source=sources);

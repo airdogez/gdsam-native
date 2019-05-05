@@ -5,5 +5,5 @@ using namespace godot;
 SAM::SAM() {
 }
 
-void SQLite::_register_methods() {
+void SAM::_register_methods() {
 }

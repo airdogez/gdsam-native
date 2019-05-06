@@ -28,7 +28,7 @@ class SAM : public Reference
 	void set_singmode(bool sing);
 
 	int generate_tts(int debug = 0);
-	void generate(String text, int pitch, int speed, int mouth, int throat);
+	void generate(String text, bool phonetic, int pitch, int speed, int mouth, int throat, bool sing);
 
 	Vector2 get_buffer_at_pos(int idx);
 	int get_buffer_size();

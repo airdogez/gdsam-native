@@ -39,7 +39,7 @@ void SAM::set_singmode(bool sing){
 }
 
 
-void SAM::generate(String text, int pitch, int speed, int mouth, int throat){
+void SAM::generate(String text, bool phonetic, int pitch, int speed, int mouth, int throat, bool sing){
     //state = SamState();
 	memset(state.buffer, 0, sizeof(state.buffer));
 	state.bufferpos = 0;
@@ -47,12 +47,16 @@ void SAM::generate(String text, int pitch, int speed, int mouth, int throat){
 	state.speed = speed;
 	state.mouth = mouth;
 	state.throat = throat;
+	state.singmode = sing;
     memset(input, 0, 256);
 	strcat_s((char*)input, 256, text.ascii().get_data());
 	strcat_s((char*)input, 256, " ");
 	strcat_s((char*)input, 256, "[");
-	if (!textToPhonemes(state, input)){
-		Godot::print("Couldn't transform texto to phonemes");
+	if(!phonetic){
+		if (!textToPhonemes(state, input))
+		{
+			Godot::print("Couldn't transform texto to phonemes");
+		}
 	}
     if (!SAMMain(input, state)){
 		Godot::print("Couldn't generate tts");

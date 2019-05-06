@@ -54,6 +54,117 @@ margin_right = 587.0
 margin_bottom = 276.0
 text = "Say"
 
+[node name="VBoxContainer3" type="VBoxContainer" parent="Control"]
+margin_left = 144.0
+margin_top = 8.0
+margin_right = 484.0
+margin_bottom = 44.0
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/VBoxContainer3"]
+margin_top = 1.0
+margin_right = 340.0
+margin_bottom = 15.0
+text = "Speed"
+
+[node name="SpeedSlider" type="HSlider" parent="Control/VBoxContainer3"]
+margin_top = 19.0
+margin_right = 340.0
+margin_bottom = 35.0
+max_value = 255.0
+rounded = true
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="Control"]
+margin_left = 820.046
+margin_top = 152.874
+margin_right = 861.046
+margin_bottom = 194.874
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/VBoxContainer5"]
+margin_right = 41.0
+margin_bottom = 14.0
+text = "Sing"
+
+[node name="SingCheck" type="CheckBox" parent="Control/VBoxContainer5"]
+margin_top = 18.0
+margin_right = 41.0
+margin_bottom = 42.0
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="Control"]
+margin_left = 744.996
+margin_top = 153.824
+margin_right = 800.996
+margin_bottom = 195.824
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/VBoxContainer6"]
+margin_right = 56.0
+margin_bottom = 14.0
+text = "Phonetic"
+
+[node name="PhoneticCheck" type="CheckBox" parent="Control/VBoxContainer6"]
+margin_top = 18.0
+margin_right = 56.0
+margin_bottom = 42.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+margin_left = 141.0
+margin_top = 40.0
+margin_right = 483.0
+margin_bottom = 117.0
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+margin_top = 21.0
+margin_right = 342.0
+margin_bottom = 35.0
+text = "Pitch"
+
+[node name="PitchSlider" type="HSlider" parent="Control/VBoxContainer"]
+margin_top = 39.0
+margin_right = 342.0
+margin_bottom = 55.0
+max_value = 255.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control"]
+margin_left = 506.0
+margin_top = -10.887
+margin_right = 847.0
+margin_bottom = 66.113
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/VBoxContainer2"]
+margin_top = 21.0
+margin_right = 341.0
+margin_bottom = 35.0
+text = "Mouth"
+
+[node name="MouthSlider" type="HSlider" parent="Control/VBoxContainer2"]
+margin_top = 39.0
+margin_right = 341.0
+margin_bottom = 55.0
+max_value = 255.0
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="Control"]
+margin_left = 507.0
+margin_top = 39.1855
+margin_right = 848.0
+margin_bottom = 116.186
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/VBoxContainer4"]
+margin_top = 21.0
+margin_right = 341.0
+margin_bottom = 35.0
+text = "Throat"
+
+[node name="ThroatSlider" type="HSlider" parent="Control/VBoxContainer4"]
+margin_top = 39.0
+margin_right = 341.0
+margin_bottom = 55.0
+max_value = 255.0
+
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 503.158, 414.737 )
 texture = ExtResource( 2 )
@@ -62,3 +173,9 @@ script = ExtResource( 3 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 "anims/New Anim" = SubResource( 2 )
 [connection signal="pressed" from="Control/Button" to="AudioStreamPlayer" method="_on_Button_pressed"]
+[connection signal="value_changed" from="Control/VBoxContainer3/SpeedSlider" to="AudioStreamPlayer" method="_on_speed_value_changed"]
+[connection signal="toggled" from="Control/VBoxContainer5/SingCheck" to="AudioStreamPlayer" method="_on_SingCheck_toggled"]
+[connection signal="toggled" from="Control/VBoxContainer6/PhoneticCheck" to="AudioStreamPlayer" method="_on_PhoneticCheck_toggled"]
+[connection signal="value_changed" from="Control/VBoxContainer/PitchSlider" to="AudioStreamPlayer" method="_on_pitch_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer2/MouthSlider" to="AudioStreamPlayer" method="_on_mouth_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer4/ThroatSlider" to="AudioStreamPlayer" method="_on_throat_value_changed"]
